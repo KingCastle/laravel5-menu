@@ -1,12 +1,12 @@
 # Laravel Menu
-[![Latest Stable Version](https://poser.pugx.org/lavary/laravel5-menu/v/stable.svg)](https://packagist.org/packages/lavary/laravel5-menu)
-[![Latest Unstable Version](https://poser.pugx.org/lavary/laravel5-menu/v/unstable.svg)](https://packagist.org/packages/lavary/laravel5-menu)
-[![Total Downloads](https://poser.pugx.org/lavary/laravel5-menu/downloads.svg)](https://packagist.org/packages/lavary/laravel5-menu)
-[![License](https://poser.pugx.org/lavary/laravel5-menu/license.svg)](https://packagist.org/packages/lavary/laravel5-menu)
+[![Latest Stable Version](https://poser.pugx.org/kiwina/laravel5-menu/v/stable.svg)](https://packagist.org/packages/kiwina/laravel5-menu)
+[![Latest Unstable Version](https://poser.pugx.org/kiwina/laravel5-menu/v/unstable.svg)](https://packagist.org/packages/kiwina/laravel5-menu)
+[![Total Downloads](https://poser.pugx.org/kiwina/laravel5-menu/downloads.svg)](https://packagist.org/packages/kiwina/laravel5-menu)
+[![License](https://poser.pugx.org/kiwina/laravel5-menu/license.svg)](https://packagist.org/packages/kiwina/laravel5-menu)
 
 
 A quick way to create menus in [Laravel 5.x](http://laravel.com/)
-Note: this is a fork of benswinburne/laravel-menu witch was patched for Laravel 5 i just renamed it and removed Laravel 4 support
+Note: this is a fork of benswinburne/laravel-menu witch was patched for Laravel 5 ,renamed it ,removed Laravel 4 support and made a few more updates
 ##Documentation
 
 * [Installation](#installation)
@@ -74,7 +74,7 @@ Run the composer update command:
 composer update
 ```
 
-Now append Laravel Menu service provider to  `providers` array in `app/config/app.php`.
+Now append Laravel Menu service provider to  `providers` array in `config/app.php`.
 
 ```php
 <?php
@@ -112,7 +112,7 @@ This registers the package with Laravel and creates an alias called `Menu`.
 ## Getting Started
 
 
-Menus can be defined in `app/routes.php` or `start/global.php` or any other place you wish as long as it is auto loaded when a request hits your application.
+Menus can be defined in `app/Http/routes.php` a service provider or any other place you wish as long as it is auto loaded when a request hits your application.
 
 If menus are defined inside a service provider make sure to add the service provider after `Kiwina\Menu\ServiceProvider`
 
