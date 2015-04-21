@@ -18,7 +18,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         $this->publishes([
             __DIR__ . '/../config/settings.php' => config_path('laravel5-menu.php'),
-            __DIR__ . '/../views' => base_path('resources/views/vendor/kiwina'),
+            __DIR__ . '/../views' => base_path('resources/views/vendor/laravel5-menu'),
         ]);
        
         // Extending Blade engine
