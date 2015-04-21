@@ -1,0 +1,26 @@
+{
+    "name": "kiwina/laravel5-menu",
+    "description": "A quick way to create menus in Laravel 5",
+    "keywords": [
+        "laravel"
+    ],
+    "homepage": "https://github.com/kiwina/laravel5-menu",
+    "authors": [
+        {
+            "name": "Lavary",
+            "email": "mrl.8081@gmail.com"
+         }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=5.3.0",
+        "illuminate/support": "5.0.x",
+        "illuminate/view": "5.0.x"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kiwina\\Menu\\": "src/"
+        },
+    },
+    "minimum-stability": "dev"
+}
