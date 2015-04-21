@@ -79,12 +79,11 @@ class Item
 
         // Storing path options with each link instance.
         if (!is_array($options)) {
-            $path = array('url' => $options);
+            $path = ['url' => $options];
         } elseif (isset($options['raw']) && $options['raw'] == true) {
             $path = null;
         } else {
-            $path = array_only($options,
-                                     array('url', 'route', 'action', 'secure'));
+            $path = array_only($options,['url', 'route', 'action', 'secure']);
         }
 
         if (!is_null($path)) {
@@ -188,21 +187,28 @@ class Item
      */
     public function url()
     {
-
-            // If the item has a link proceed:
-            if (!is_null($this->link)) {
-
-                // If item's link has `href` property explcitly defined
-                // return it
-                if ($this->link->href) {
-                    return $this->link->href;
-                }
-
-                // Otherwise dispatch to the proper address
-                return $this->builder->dispatch($this->link->path);
+        // If the item has a link proceed:
+        if (!is_null($this->link)) {
+            if ($this->link->href) {
+                return $this->link->href;
             }
-    }
 
+            // Otherwise dispatch to the proper address
+            return $this->builder->dispatch($this->link->path);
+        }
+    }
+    
+    /**
+     * Appends text or html to the item.
+     *
+     * @return Kiwina\Menu\Item
+     */
+    public function enclose($html)
+    {
+        if(is_array($html)) 
+            $this->title = $html[0] . $this->title . $html[1];
+        return $this;
+    }
     /**
      * Prepends text or html to the item.
      *
@@ -321,7 +327,7 @@ class Item
             return $this;
         }
 
-        $this->attributes['class'] = Builder::formatGroupClass(array('class' => $this->builder->conf('active_class')), $this->attributes);
+        $this->attributes['class'] = Builder::formatGroupClass(['class' => $this->builder->conf('active_class')], $this->attributes);
 
         return $this;
     }
@@ -392,7 +398,6 @@ class Item
         if (property_exists($this, $prop)) {
             return $this->$prop;
         }
-
         return $this->data($prop);
     }
 }

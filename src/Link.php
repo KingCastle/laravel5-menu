@@ -41,7 +41,6 @@ class Link
     public function active()
     {
         $this->attributes['class'] = Builder::formatGroupClass(array('class' => 'active'), $this->attributes);
-
         return $this;
     }
 
@@ -53,7 +52,6 @@ class Link
     public function href($href)
     {
         $this->href = $href;
-
         return $this;
     }
 
@@ -65,7 +63,6 @@ class Link
     public function secure()
     {
         $this->path['secure'] = true;
-
         return $this;
     }
 
@@ -79,14 +76,11 @@ class Link
     public function attr()
     {
         $args = func_get_args();
-
         if (isset($args[0]) && is_array($args[0])) {
             $this->attributes = array_merge($this->attributes, $args[0]);
-
             return $this;
         } elseif (isset($args[0]) && isset($args[1])) {
             $this->attributes[$args[0]] = $args[1];
-
             return $this;
         } elseif (isset($args[0])) {
             return isset($this->attributes[$args[0]]) ? $this->attributes[$args[0]] : null;

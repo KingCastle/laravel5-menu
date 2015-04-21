@@ -37,7 +37,7 @@ class Builder
      *
      * @var array
      */
-    protected $reserved = array('route', 'action', 'url', 'prefix', 'parent', 'secure', 'raw');
+    protected $reserved = ['route', 'action', 'url', 'prefix', 'parent', 'secure', 'raw'];
 
     /**
      * The last inserted item's id.
@@ -62,7 +62,6 @@ class Builder
         $this->conf = $conf;
 		$this->html   = $html;
 		$this->url    = $url;
-        // creating a laravel collection ofr storing enu items
         $this->items = new Collection;
     }
 
@@ -77,12 +76,9 @@ class Builder
     public function add($title, $options = '')
     {
         $item = new Item($this, $this->id(), $title, $options);
-
         $this->items->push($item);
-
         // stroing the last inserted item's id
         $this->last_id = $item->id;
-
         return $item;
     }
 
@@ -195,12 +191,7 @@ class Builder
     public function group($attributes, $closure)
     {
         $this->updateGroupStack($attributes);
-
-        // Once we have updated the group stack, we will execute the user Closure and
-        // merge in the groups attributes when the item is created. After we have
-        // run the callback, we will pop the attributes off of this group stack.
         call_user_func($closure, $this);
-
         array_pop($this->groupStack);
     }
 
@@ -241,9 +232,7 @@ class Builder
     protected static function mergeGroup($new, $old)
     {
         $new['prefix'] = self::formatGroupPrefix($new, $old);
-
         $new['class']  = self::formatGroupClass($new, $old);
-
         return array_merge(array_except($old, array('prefix', 'class')), $new);
     }
 
@@ -260,7 +249,6 @@ class Builder
         if (isset($new['prefix'])) {
             return trim(array_get($old, 'prefix'), '/').'/'.trim($new['prefix'], '/');
         }
-
         return array_get($old, 'prefix');
     }
 
@@ -301,7 +289,6 @@ class Builder
     {
         if (isset($new['class'])) {
             $classes = trim(trim(array_get($old, 'class')).' '.trim(array_get($new, 'class')));
-
             return implode(' ', array_unique(explode(' ', $classes)));
         }
 
@@ -335,18 +322,11 @@ class Builder
      */
     public function dispatch($options)
     {
-        // We will also check for a "route" or "action" parameter on the array so that
-        // developers can easily specify a route or controller action when creating the
-        // menus.
         if (isset($options['url'])) {
             return $this->getUrl($options);
         } elseif (isset($options['route'])) {
             return $this->getRoute($options['route']);
         }
-
-        // If an action is available, we are attempting to point the link to controller
-        // action route. So, we will use the URL generator to get the path to these
-        // actions and return them from the method. Otherwise, we'll use current.
         elseif (isset($options['action'])) {
             return $this->getControllerAction($options['action']);
         }
@@ -374,14 +354,13 @@ class Builder
                 return $url[0];
             }
 
-            return  $this->urlto($prefix.'/'.$url[0], array_slice($url, 1), $secure);
+            return  $this->url->to($prefix.'/'.$url[0], array_slice($url, 1), $secure);
         }
 
         if (self::isAbs($url)) {
             return $url;
         }
-
-        return  $this->urlto($prefix.'/'.$url, array(), $secure);
+        return  $this->url->to($prefix.'/'.$url, array(), $secure);
     }
 
     /**
@@ -406,10 +385,10 @@ class Builder
     protected function getRoute($options)
     {
         if (is_array($options)) {
-            return  $this->urlroute($options[0], array_slice($options, 1));
+            return  $this->url->route($options[0], array_slice($options, 1));
         }
 
-        return  $this->urlroute($options);
+        return  $this->url->route($options);
     }
 
     /**
@@ -422,10 +401,10 @@ class Builder
     protected function getControllerAction($options)
     {
         if (is_array($options)) {
-            return  $this->urlaction($options[0], array_slice($options, 1));
+            return  $this->url->action($options[0], array_slice($options, 1));
         }
 
-        return  $this->urlaction($options);
+        return  $this->url->action($options);
     }
 
     /**
@@ -604,7 +583,7 @@ class Builder
         $attrs['class']  = self::formatGroupClass($attrs, $old);
 
         // Merging new and old array and parse it as a string
-        return \HTML::attributes(array_merge(array_except($old, array('class')), $attrs));
+        return $this->html->attributes(array_merge(array_except($old, array('class')), $attrs));
     }
 
     /**
@@ -627,8 +606,6 @@ class Builder
             }
             if ($item->$attribute == $value) {
                 $collection->push($item);
-
-                // Check if item has any children
                 if ($item->hasChildren()) {
                     $collection = $collection->merge($this->filterRecursive($attribute, $item->id));
                 }
@@ -674,7 +651,7 @@ class Builder
                 return true;
             }
 
-                return false;
+            return false;
         })->values();
     }
 
@@ -689,8 +666,6 @@ class Builder
             return $this->$prop;
         }
 
-        return $this->whereNickname($prop)
-
-                    ->first();
+        return $this->whereNickname($prop)->first();
     }
 }

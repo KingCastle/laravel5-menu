@@ -14,7 +14,6 @@ class Collection extends BaseCollection
     public function attr()
     {
         $args = func_get_args();
-
         $this->each(function ($item) use ($args) {
             if (count($args) >= 2) {
                 $item->attr($args[0], $args[1]);
@@ -55,12 +54,27 @@ class Collection extends BaseCollection
      *
      * @return Kiwina\Menu\Collection
      */
+    public function enclose($html)
+    {
+        $this->each(function ($item) use ($html) {
+            if(is_array($html))
+                $item->title = $html[0] . $item->title . $html[1];
+        });
+        return $this;
+    }
+    
+    /**
+     * Appends text or HTML to a collection of items.
+     *
+     * @param  string
+     *
+     * @return Kiwina\Menu\Collection
+     */
     public function append($html)
     {
         $this->each(function ($item) use ($html) {
             $item->title .= $html;
         });
-
         return $this;
     }
 
