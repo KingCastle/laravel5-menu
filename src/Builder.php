@@ -583,7 +583,7 @@ class Builder
         $attrs['class']  = self::formatGroupClass($attrs, $old);
 
         // Merging new and old array and parse it as a string
-        return $this->html->attributes(array_merge(array_except($old, array('class')), $attrs));
+        return \HTML::attributes(array_merge(array_except($old, array('class')), $attrs));
     }
 
     /**
