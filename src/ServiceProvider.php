@@ -14,11 +14,12 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function boot()
     {
-        $this->publishes([
-            __DIR__.'/../config/settings.php' => config_path('laravel5-menu.php'),
-        ]);
-
         $this->loadViewsFrom(__DIR__.'/../views', 'laravel5-menu');
+
+        $this->publishes([
+            __DIR__ . '/../config/settings.php' => config_path('laravel5-menu.php'),
+            __DIR__ . '/../views' => base_path('resources/views/vendor/kiwina'),
+        ]);
        
         // Extending Blade engine
         require_once __DIR__.'/Extensions/BladeExtension.php';
