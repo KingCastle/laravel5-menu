@@ -114,6 +114,7 @@ This registers the package with Laravel and creates an alias called `Menu`.
 
 Menus can be defined in `app/routes.php` or `start/global.php` or any other place you wish as long as it is auto loaded when a request hits your application.
 
+If menus are defined inside a service provider make sure to add the service provider after `Kiwina\Menu\ServiceProvider`
 
 Here is a basic usage:
 

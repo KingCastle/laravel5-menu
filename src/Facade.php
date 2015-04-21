@@ -1,14 +1,7 @@
 <?php namespace Kiwina\Menu;
 
-use Illuminate\Support\Facades\Facade as BaseFacade;
-
-class Facade extends BaseFacade
+class Facade extends \Illuminate\Support\Facades\Facade
 {
-    /**
-     * Get the registered name of the component.
-     *
-     * @return string
-     */
     protected static function getFacadeAccessor()
     {
         return 'menu';

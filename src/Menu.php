@@ -1,5 +1,9 @@
 <?php namespace Kiwina\Menu;
 
+use Illuminate\Html\HtmlBuilder;
+use Illuminate\Routing\UrlGenerator;
+use Illuminate\Config\Repository;
+use Illuminate\View\Factory;
 class Menu
 {
     /**
@@ -15,16 +19,22 @@ class Menu
      * @var array
      */
     protected $config;
-
+	/**
+	 * @var \Illuminate\View\Factory
+	 */
+	protected $view;
     /**
      * Initializing the menu builder.
      */
-    public function __construct(array $config = array())
+    public function __construct(array $config,Factory $view,HtmlBuilder $html, UrlGenerator $url)
     {
-        // creating a collection for storing menus
-        $this->collection = new Collection();
-
         $this->config = $config;
+        $this->view = $view;
+        $this->html       = $html;
+		$this->url        = $url;
+        // creating a collection for storing menus
+        $this->collection = new Collection;
+        
     }
 
     /**
@@ -38,7 +48,7 @@ class Menu
     public function make($name, $callback)
     {
         if (is_callable($callback)) {
-            $menu = new Builder($name, $this->loadConf($name));
+            $menu = new Builder($name, $this->loadConf($name), $this->html, $this->url);
 
             // Registering the items
             call_user_func($callback, $menu);
@@ -47,7 +57,7 @@ class Menu
             $this->collection->put($name, $menu);
 
             // Make the instance available in all views
-            \View::share($name, $menu);
+            $this->view->share($name, $menu);
 
             return $menu;
         }

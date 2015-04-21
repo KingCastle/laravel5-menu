@@ -1,5 +1,7 @@
 <?php namespace Kiwina\Menu;
 
+use Illuminate\Html\HtmlBuilder;
+use Illuminate\Routing\UrlGenerator;
 class Builder
 {
     /**
@@ -43,18 +45,25 @@ class Builder
      * @var int
      */
     protected $last_id;
-
+	/**
+	 * @var \Illuminate\Routing\UrlGenerator
+	 */
+	protected $url;
+	/**
+	 * @var \Illuminate\Html\HtmlBuilder
+	 */
+	protected $html;
     /**
      * Initializing the menu manager.
      */
-    public function __construct($name, $conf)
+    public function __construct($name, $conf, HtmlBuilder $html, UrlGenerator $url)
     {
         $this->name = $name;
-
-        // creating a laravel collection ofr storing enu items
-        $this->items = new Collection();
-
         $this->conf = $conf;
+		$this->html   = $html;
+		$this->url    = $url;
+        // creating a laravel collection ofr storing enu items
+        $this->items = new Collection;
     }
 
     /**
@@ -365,14 +374,14 @@ class Builder
                 return $url[0];
             }
 
-            return \URL::to($prefix.'/'.$url[0], array_slice($url, 1), $secure);
+            return  $this->urlto($prefix.'/'.$url[0], array_slice($url, 1), $secure);
         }
 
         if (self::isAbs($url)) {
             return $url;
         }
 
-        return \URL::to($prefix.'/'.$url, array(), $secure);
+        return  $this->urlto($prefix.'/'.$url, array(), $secure);
     }
 
     /**
@@ -397,10 +406,10 @@ class Builder
     protected function getRoute($options)
     {
         if (is_array($options)) {
-            return \URL::route($options[0], array_slice($options, 1));
+            return  $this->urlroute($options[0], array_slice($options, 1));
         }
 
-        return \URL::route($options);
+        return  $this->urlroute($options);
     }
 
     /**
@@ -413,10 +422,10 @@ class Builder
     protected function getControllerAction($options)
     {
         if (is_array($options)) {
-            return \URL::action($options[0], array_slice($options, 1));
+            return  $this->urlaction($options[0], array_slice($options, 1));
         }
 
-        return \URL::action($options);
+        return  $this->urlaction($options);
     }
 
     /**
@@ -563,7 +572,7 @@ class Builder
      */
     public function attributes($attributes = array())
     {
-        return \HTML::attributes($attributes);
+        return $this->html->attributes($attributes);
     }
 
     /**

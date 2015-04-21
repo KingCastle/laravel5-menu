@@ -1,13 +1,13 @@
 <?php namespace Kiwina\Menu;
 
-class ServiceProvider extends Illuminate\Support\ServiceProvider
+class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     /**
      * Indicates if loading of the provider is deferred.
      *
      * @var bool
      */
-    protected $defer = true;
+    protected $defer = false;
 
     /**
      * Bootstrap the application events.
@@ -19,9 +19,9 @@ class ServiceProvider extends Illuminate\Support\ServiceProvider
         ]);
 
         $this->loadViewsFrom(__DIR__.'/../views', 'laravel5-menu');
-
-    // Extending Blade engine
-    require_once __DIR__.'/../Extensions/BladeExtension.php';
+       
+        // Extending Blade engine
+        require_once __DIR__.'/Extensions/BladeExtension.php';
     }
 
     /**
@@ -29,14 +29,22 @@ class ServiceProvider extends Illuminate\Support\ServiceProvider
      */
     public function register()
     {
-        $app = $this->app;
-
         // merge default configs
         $this->mergeConfigFrom(__DIR__.'/../config/views.php', 'laravel5-menu.views');
         $this->mergeConfigFrom(__DIR__.'/../config/settings.php', 'laravel5-menu');
-
-        $app['menu'] = $app->share(function ($app) {
-            return new Menu($app['config']->get('laravel5-menu'));
-        });
+        $this->app->register('Illuminate\Html\HtmlServiceProvider');
+        $this->app->bindShared('menu', function($app) {
+			return new Menu($app['config']->get('laravel5-menu'),$app['view'],$app['html'], $app['url']);
+		});
     }
+
+	/**
+	 * Get the services provided by the provider.
+	 *
+	 * @return array
+	 */
+	public function provides()
+	{
+		return ['menu'];
+	}
 }

@@ -1,4 +1,5 @@
 <?php namespace Kiwina\Menu;
+use Illuminate\Support\Facades\Request;
 
 class Item
 {
@@ -263,7 +264,7 @@ class Item
     {
         if ($this->builder->conf['restful'] == true) {
             $path  = ltrim(parse_url($this->url(), PHP_URL_PATH), '/');
-            $rpath = \Request::path();
+            $rpath = Request::path();
 
             if ($this->builder->conf['rest_base']) {
                 $base = (is_array($this->builder->conf['rest_base'])) ? implode('|', $this->builder->conf['rest_base']) : $this->builder->conf['rest_base'];
