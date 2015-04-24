@@ -33,7 +33,7 @@ Note: this is a fork of benswinburne/laravel-menu witch was patched for Laravel 
 	- [RESTful URLs](#restful-urls)
 	- [URL Wildcards](#url-wildcards)
 * [Inserting a Separator](#inserting-a-separator)
-* [Append and Prepend](#append-and-prepend)
+* [Append, Prepend, New Enclose](#append-and-prepend)
 * [Raw Items](#raw-items)
 * [Menu Groups](#menu-groups)
 * [URL Prefixing](#url-prefixing)
@@ -833,7 +833,9 @@ You can insert a separator after each item using `divide()` method:
 ## Append and Prepend
 
 
-You can `append` or `prepend` HTML or plain-text to each item's title after it is defined:
+You can `append` , `prepend` or `enclose` HTML or plain-text to each item's title after it is defined:
+
+NOTE: enclose takes an array of 2 items
 
 ```php
 <?php
@@ -845,7 +847,8 @@ Menu::make('MyNavBar', function($menu){
   
   $menu->about->attr(array('class' => 'dropdown-toggle', 'data-toggle' => 'dropdown'))
               ->append(' <b classs="caret"></b>')
-              ->prepend('<span classs="glyphicon glyphicon-user"></span> ');
+              ->prepend('<span classs="glyphicon glyphicon-user"></span> ')
+              ->enclose(['<b>','</b>']);
               
   // ...            
 
@@ -861,14 +864,14 @@ The above code will result:
   
   <li class="navbar navbar-about dropdown">
    <a href="about" class="dropdown-toggle" data-toggle="dropdown">
-     <span class="glyphicon glyphicon-user"></span> About <b classs="caret"></b>
+     <span class="glyphicon glyphicon-user"></span> <b>About</b> <b classs="caret"></b>
    </a>
   </li>
 </ul>
 
 ```
 
-You can call `prepend` and `append` on collections as well.
+You can call `prepend` , `append` and `enclose` on collections as well.
 
 ## Raw Items
 
