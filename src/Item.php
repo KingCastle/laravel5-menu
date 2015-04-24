@@ -23,7 +23,7 @@ class Item
      * @var string
      */
     public $title;
-
+    public $isActive;
     /**
      * Item's title in camelCase.
      *
@@ -282,7 +282,7 @@ class Item
                 $this->activate();
             }
         } else {
-            if ($this->url() == \Request::url()) {
+            if ($this->url() == Request::url()) {
                 $this->activate();
             }
         }
@@ -294,7 +294,6 @@ class Item
     public function activate(\Kiwina\Menu\Item $item = null)
     {
         $item = is_null($item) ? $this : $item;
-
         // Check to see which element should have class 'active' set.
         if ($this->builder->conf('active_element') == 'item') {
             $item->active();
@@ -318,6 +317,7 @@ class Item
      */
     public function active($pattern = null)
     {
+        $this->isActive = 1;
         if (!is_null($pattern)) {
             $pattern = ltrim(preg_replace('/\/\*/', '(/.*)?', $pattern), '/');
             if (preg_match("@^{$pattern}\z@", \Request::path())) {
@@ -326,7 +326,6 @@ class Item
 
             return $this;
         }
-
         $this->attributes['class'] = Builder::formatGroupClass(['class' => $this->builder->conf('active_class')], $this->attributes);
 
         return $this;
