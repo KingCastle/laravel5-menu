@@ -1,4 +1,4 @@
-<?php namespace Kiwina\Menu;
+<?php namespace Complay\Menu;
 
 class Link
 {
@@ -36,7 +36,7 @@ class Link
     /**
      * Make the anchor active.
      *
-     * @return Kiwina\Menu\Link
+     * @return Complay\Menu\Link
      */
     public function active()
     {
@@ -47,7 +47,7 @@ class Link
     /**
      * Set Anchor's href property.
      *
-     * @return Kiwina\Menu\Link
+     * @return Complay\Menu\Link
      */
     public function href($href)
     {
@@ -58,7 +58,7 @@ class Link
     /**
      * Make the url secure.
      *
-     * @return Kiwina\Menu\Item
+     * @return Complay\Menu\Item
      */
     public function secure()
     {
@@ -71,7 +71,7 @@ class Link
      *
      * @param  mixed
      *
-     * @return string|Kiwina\Menu\Link
+     * @return string|Complay\Menu\Link
      */
     public function attr()
     {

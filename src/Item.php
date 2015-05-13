@@ -1,4 +1,4 @@
-<?php namespace Kiwina\Menu;
+<?php namespace Complay\Menu;
 use Illuminate\Support\Facades\Request;
 
 class Item
@@ -6,7 +6,7 @@ class Item
     /**
      * Reference to the menu builder.
      *
-     * @var Kiwina\Menu\Menu
+     * @var Complay\Menu\Menu
      */
     protected $builder;
 
@@ -60,13 +60,13 @@ class Item
     public $attributes = array();
 
     /**
-     * Creates a new Kiwina\Menu\MenuItem instance.
+     * Creates a new Complay\Menu\MenuItem instance.
      *
      * @param string            $title
      * @param string            $url
      * @param array             $attributes
      * @param int               $parent
-     * @param \Kiwina\Menu\Menu $builder
+     * @param \Complay\Menu\Menu $builder
      */
     public function __construct($builder, $id, $title, $options)
     {
@@ -120,7 +120,7 @@ class Item
     /**
      * Add a plain text item.
      *
-     * @return Kiwina\Menu\Item
+     * @return Complay\Menu\Item
      */
     public function raw($title, array $options = array())
     {
@@ -159,7 +159,7 @@ class Item
      *
      * @param  mixed
      *
-     * @return string|Kiwina\Menu\Item
+     * @return string|Complay\Menu\Item
      */
     public function attr()
     {
@@ -201,7 +201,7 @@ class Item
     /**
      * Appends text or html to the item.
      *
-     * @return Kiwina\Menu\Item
+     * @return Complay\Menu\Item
      */
     public function enclose($html)
     {
@@ -212,7 +212,7 @@ class Item
     /**
      * Prepends text or html to the item.
      *
-     * @return Kiwina\Menu\Item
+     * @return Complay\Menu\Item
      */
     public function prepend($html)
     {
@@ -224,7 +224,7 @@ class Item
     /**
      * Appends text or html to the item.
      *
-     * @return Kiwina\Menu\Item
+     * @return Complay\Menu\Item
      */
     public function append($html)
     {
@@ -246,7 +246,7 @@ class Item
     /**
      * Returns childeren of the item.
      *
-     * @return Kiwina\Menu\Collection
+     * @return Complay\Menu\Collection
      */
     public function children()
     {
@@ -256,7 +256,7 @@ class Item
     /**
      * Returns all childeren of the item.
      *
-     * @return Kiwina\Menu\Collection
+     * @return Complay\Menu\Collection
      */
     public function all()
     {
@@ -291,7 +291,7 @@ class Item
     /**
      * Activat the item.
      */
-    public function activate(\Kiwina\Menu\Item $item = null)
+    public function activate(\Complay\Menu\Item $item = null)
     {
         $item = is_null($item) ? $this : $item;
         // Check to see which element should have class 'active' set.
@@ -313,7 +313,7 @@ class Item
     /**
      * Make the item active.
      *
-     * @return Kiwina\Menu\Item
+     * @return Complay\Menu\Item
      */
     public function active($pattern = null)
     {
@@ -336,7 +336,7 @@ class Item
      *
      * @param  mixed
      *
-     * @return string|Kiwina\Menu\Item
+     * @return string|Complay\Menu\Item
      */
     public function data()
     {

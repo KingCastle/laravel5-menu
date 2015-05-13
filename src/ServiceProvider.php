@@ -1,4 +1,4 @@
-<?php namespace Kiwina\Menu;
+<?php namespace Complay\Menu;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {

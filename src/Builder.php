@@ -1,4 +1,4 @@
-<?php namespace Kiwina\Menu;
+<?php namespace Complay\Menu;
 
 use Illuminate\Html\HtmlBuilder;
 use Illuminate\Routing\UrlGenerator;
@@ -71,7 +71,7 @@ class Builder
      * @param string       $title
      * @param string|array $acion
      *
-     * @return Kiwina\Menu\Item $item
+     * @return Complay\Menu\Item $item
      */
     public function add($title, $options = '')
     {
@@ -95,7 +95,7 @@ class Builder
     /**
      * Add raw content.
      *
-     * @return Kiwina\Menu\Item
+     * @return Complay\Menu\Item
      */
     public function raw($title, array $options = array())
     {
@@ -107,7 +107,7 @@ class Builder
     /**
      * Returns menu item by name.
      *
-     * @return Kiwina\Menu\Item
+     * @return Complay\Menu\Item
      */
     public function get($title)
     {
@@ -119,7 +119,7 @@ class Builder
     /**
      * Returns menu item by Id.
      *
-     * @return Kiwina\Menu\Item
+     * @return Complay\Menu\Item
      */
     public function find($id)
     {
@@ -141,7 +141,7 @@ class Builder
     /**
      * Return the first item in the collection.
      *
-     * @return Kiwina\Menu\Item
+     * @return Complay\Menu\Item
      */
     public function first()
     {
@@ -151,7 +151,7 @@ class Builder
     /**
      * Return the last item in the collection.
      *
-     * @return Kiwina\Menu\Item
+     * @return Complay\Menu\Item
      */
     public function last()
     {
@@ -161,7 +161,7 @@ class Builder
     /**
      * Returns menu item by name.
      *
-     * @return Kiwina\Menu\Item
+     * @return Complay\Menu\Item
      */
     public function item($title)
     {
@@ -422,7 +422,7 @@ class Builder
      *
      * @param callable $callback
      *
-     * @return Kiwina\Menu\Builder
+     * @return Complay\Menu\Builder
      */
     public function filter($callback)
     {
@@ -438,7 +438,7 @@ class Builder
      *
      * @param string|callable $sort_type
      *
-     * @return Kiwina\Menu\Builder
+     * @return Complay\Menu\Builder
      */
     public function sortBy($sort_by, $sort_type = 'asc')
     {
@@ -592,7 +592,7 @@ class Builder
      * @param string $attribute
      * @param mixed  $value
      *
-     * @return Kiwina\Menu\Collection
+     * @return Complay\Menu\Collection
      */
     public function filterRecursive($attribute, $value)
     {
@@ -622,7 +622,7 @@ class Builder
      * @param string $method
      * @param array  $args
      *
-     * @return Kiwina\Menu\Item
+     * @return Complay\Menu\Item
      */
     public function __call($method, $args)
     {
@@ -658,7 +658,7 @@ class Builder
     /**
      * Returns menu item by name.
      *
-     * @return Kiwina\Menu\Item
+     * @return Complay\Menu\Item
      */
     public function __get($prop)
     {

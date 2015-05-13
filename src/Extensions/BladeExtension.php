@@ -36,7 +36,7 @@ Blade::extend(function ($view, $compiler) {
     $pattern = $compiler->CreatePlainMatcher('lm-endattrs');
 
     return preg_replace($pattern,
-        '$1<?php echo \Kiwina\Menu\Builder::mergeStatic(ob_get_clean(), $lm_attrs); ?>$2',
+        '$1<?php echo \Complay\Menu\Builder::mergeStatic(ob_get_clean(), $lm_attrs); ?>$2',
         $view);
 
 });

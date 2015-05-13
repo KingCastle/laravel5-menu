@@ -1,4 +1,4 @@
-<?php namespace Kiwina\Menu;
+<?php namespace Complay\Menu;
 
 use Illuminate\Html\HtmlBuilder;
 use Illuminate\Routing\UrlGenerator;
@@ -43,7 +43,7 @@ class Menu
      * @param string   $name
      * @param callable $callback
      *
-     * @return \Kiwina\Menu\Menu
+     * @return \Complay\Menu\Menu
      */
     public function make($name, $callback)
     {
@@ -86,7 +86,7 @@ class Menu
      *
      * @param string $key
      *
-     * @return \Kiwina\Menu\Item
+     * @return \Complay\Menu\Item
      */
     public function get($key)
     {

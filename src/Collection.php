@@ -1,4 +1,4 @@
-<?php namespace Kiwina\Menu;
+<?php namespace Complay\Menu;
 
 use Illuminate\Support\Collection as BaseCollection;
 
@@ -9,7 +9,7 @@ class Collection extends BaseCollection
      *
      * @param  mixed
      *
-     * @return Kiwina\Menu\Collection
+     * @return Complay\Menu\Collection
      */
     public function attr()
     {
@@ -30,7 +30,7 @@ class Collection extends BaseCollection
      *
      * @param  mixed
      *
-     * @return Kiwina\Menu\Collection
+     * @return Complay\Menu\Collection
      */
     public function data()
     {
@@ -52,7 +52,7 @@ class Collection extends BaseCollection
      *
      * @param  string
      *
-     * @return Kiwina\Menu\Collection
+     * @return Complay\Menu\Collection
      */
     public function enclose($html)
     {
@@ -68,7 +68,7 @@ class Collection extends BaseCollection
      *
      * @param  string
      *
-     * @return Kiwina\Menu\Collection
+     * @return Complay\Menu\Collection
      */
     public function append($html)
     {
@@ -83,7 +83,7 @@ class Collection extends BaseCollection
      *
      * @param  string
      *
-     * @return Kiwina\Menu\Collection
+     * @return Complay\Menu\Collection
      */
     public function prepend($html)
     {
