@@ -2,6 +2,8 @@
 
 use Illuminate\Html\HtmlBuilder;
 use Illuminate\Routing\UrlGenerator;
+use Carbon\Carbon;
+
 class Builder
 {
     /**
@@ -90,6 +92,18 @@ class Builder
     protected function id()
     {
         return $this->last_id + 1;
+    }
+    
+    /**
+     * Generate cache key for menu
+     *
+     * @param string $type
+     * 
+     * @return string
+     */    
+    private function getCacheKey($type)
+    {
+        return 'menu-' . $this->name . $type . \Route::currentRouteName();
     }
 
     /**
@@ -472,6 +486,45 @@ class Builder
 
         return $this;
     }
+    
+    /**
+     * Prepare HTML for render.
+     *
+     * @param string $type
+     * @param int    $parent
+     *
+     * @return string
+     */
+    private function prepare($type = 'ul', $parent = null)
+    {
+        $items = '';
+        
+            $item_tag = in_array($type, array('ul', 'ol')) ? 'li' : $type;
+
+            foreach ($this->whereParent($parent) as $item) {
+                $items  .= "<{$item_tag}{$this->attributes($item->attr())}>";
+
+                if ($item->link) {
+                    $items .= "<a{$this->attributes($item->link->attr())} href=\"{$item->url()}\">{$item->title}</a>";
+                } else {
+                    $items .= $item->title;
+                }
+
+                if ($item->hasChildren()) {
+                    $items .= "<{$type}>";
+                    $items .= $this->render($type, $item->id);
+                    $items .= "</{$type}>";
+                }
+
+                $items .= "</{$item_tag}>";
+
+                if ($item->divider) {
+                    $items .= "<{$item_tag}{$this->attributes($item->divider)}></{$item_tag}>";
+                }
+            }
+            
+            return $items;
+    }
 
     /**
      * Generate the menu items as list items using a recursive function.
@@ -482,31 +535,17 @@ class Builder
      * @return string
      */
     public function render($type = 'ul', $parent = null)
-    {
+    { 
         $items = '';
-
-        $item_tag = in_array($type, array('ul', 'ol')) ? 'li' : $type;
-
-        foreach ($this->whereParent($parent) as $item) {
-            $items  .= "<{$item_tag}{$this->attributes($item->attr())}>";
-
-            if ($item->link) {
-                $items .= "<a{$this->attributes($item->link->attr())} href=\"{$item->url()}\">{$item->title}</a>";
-            } else {
-                $items .= $item->title;
-            }
-
-            if ($item->hasChildren()) {
-                $items .= "<{$type}>";
-                $items .= $this->render($type, $item->id);
-                $items .= "</{$type}>";
-            }
-
-            $items .= "</{$item_tag}>";
-
-            if ($item->divider) {
-                $items .= "<{$item_tag}{$this->attributes($item->divider)}></{$item_tag}>";
-            }
+        
+        // Cache
+        $cacheKey = $this->getCacheKey($type);
+        
+        if (\Cache::has($cacheKey)){
+            $items = \Cache::get($cacheKey);
+        } else {
+            $items = $this->prepare($type, $parent);
+            \Cache::put($cacheKey, $items, Carbon::now()->addMonths(1));
         }
 
         return $items;

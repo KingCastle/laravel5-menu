@@ -62,6 +62,59 @@ class Menu
             return $menu;
         }
     }
+    
+    /**
+     * Create a new menu instance from json object.
+     * @param  string  $name
+     * @param  string  $json
+     * 
+     * @return \Complay\Menu\Menu
+     */
+    protected function makeFromJson($name, $json) {
+        $menu = $this->make($name, function($m) use(&$json) {
+
+                    $menuTreeTraverse = function(&$json, &$parentItem = null) use (&$menuTreeTraverse, &$m) {
+
+                        foreach ($json as $menuTreeItem) {
+                            $htmlAttr = $menuTreeItem['data'];
+                            $uri = isset($htmlAttr['uri'])? $htmlAttr['uri']: '';
+                            //unset($htmlAttr['uri']);
+                            $dataAttr = $this->prefixKeys($htmlAttr, 'data');
+                            $attr = $htmlAttr + $dataAttr;
+                            //
+
+                            if ($parentItem) {
+                                $m->item(strtolower($parentItem['text']))->add($menuTreeItem['text'], $uri)->attr($attr);
+                            } else {
+                                $m->add($menuTreeItem['text'], $uri)->attr($attr);
+                            }
+
+                            if (!empty($menuTreeItem['children'])) {
+                                $menuTreeTraverse($menuTreeItem['children'], $menuTreeItem);
+                            }
+                        }
+                    };
+                    $menuTreeTraverse($json);
+                });
+
+        return $menu;
+    }
+    
+    /**
+     * Add prefix to keys of given array.
+     * @param  array  $array
+     * @param  string  $prefix
+     * 
+     * @return array
+     */    
+    protected function prefixKeys($array, $prefix) {
+        $return = [];
+        foreach ($array as $k => $v) {
+            $return[$prefix . '-' . $k] = $v;
+        }
+
+        return $return;
+    }
 
     /**
      * Loads and merges configuration data.
@@ -90,7 +143,23 @@ class Menu
      */
     public function get($key)
     {
-        return $this->collection->get($key);
+        $return = $this->collection->get($key);
+        
+        if (!is_null($return)) {
+            return $return;
+        }
+
+        if (ctype_digit($key)) {
+            $navigation = Navigation::find($key);
+        } else {
+            $navigation = Navigation::where('name', 'LIKE', $key)->first();
+        }
+        
+        if (!is_null($navigation)) {
+            return $this->makeFromJson($navigation->name, $navigation->object);
+        }
+
+        return null;
     }
 
     /**
