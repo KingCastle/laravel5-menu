@@ -1,13 +1,17 @@
 {
-    "name": "complay/laravel5-menu",
+    "name": "mews/laravel5-menu",
     "description": "A quick way to create menus in Laravel 5",
     "keywords": ["laravel","menu"],
-    "homepage": "https://github.com/complay/laravel5-menu",
+    "homepage": "https://github.com/mewebstudio/laravel5-menu",
     "authors": [
         {
             "name": "Lavary",
             "email": "mrl.8081@gmail.com"
-         }
+        },
+        {
+            "name": "Muharrem ERİN",
+            "email": "me@mewebstudio.com"
+        }
     ],
     "license": "MIT",
     "require": {
